@@ -7,11 +7,13 @@ def load_data():
 
 def show_data():
     df = load_data()
-    st.subheader("Data Covid-19 di Indonesia")
-    st.dataframe(df.head(10))
+    st.subheader("📊Data Covid-19 di Indonesia")
+    
+    total_kasus = df['Total Cases'].max()
+    st.metric(label="Total Kasus Keseluruhan", value=f"{total_kasus:,}")
+    
+    df_selected = df.loc[:, 'Location':'Total Recovered']
+    st.dataframe(df_selected.head(10))
 
-    st.subheader("Statistik Deskriptif Dataset")
+    st.subheader("📊Statistik Deskriptif Dataset")
     st.write(df.describe())
-
-    st.subheader("Informasi Dataset")
-    st.write(df.info())
