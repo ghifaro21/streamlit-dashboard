@@ -3,7 +3,7 @@ import streamlit as st
 import plotly.express as px
 
 def load_data():
-    df = pd.read_csv("dataset\covid_19_indonesia_time_series_all.csv")
+    df = pd.read_csv("covid_19_indonesia_time_series_all.csv")
     return df
 
 def filter_data(df, year="Semua Tahun"):
