@@ -10,19 +10,36 @@ def judul():
 st.sidebar.title("🧭Navigasi")
 menu = st.sidebar.radio("Menu", ["🏠Home", "📊Data Page"])
 
+df = load_data()
+st.sidebar.markdown("### 🔎 Filter Data")
+
+year = select_year()
+
+# 👉 MULTI LOCATION
+locations = sorted(df['Location'].unique())
+selected_locations = st.sidebar.multiselect(
+    "Pilih Provinsi 📍",
+    options=locations,
+    default=locations
+)
+
+df_filtered = filter_data(df, year, selected_locations)
+
 if menu == "🏠Home":
     judul()
-    year = select_year()
-    df = load_data()
-    df_filtered = filter_data(df, year)
+
     kolom(df_filtered)
+    map_chart(df_filtered, year)
     pie_chart(df_filtered)
-    
+
+    col1, col2 = st.columns(2)
+    with col1:
+        bar_chart1(df_filtered)
+    with col2:
+        bar_chart2(df_filtered)
+
 elif menu == "📊Data Page":
     judul()
-    year = select_year()
-    df = load_data()
-    df_filtered = filter_data(df, year)
     show_data(df_filtered)
 
 st.markdown("---")
